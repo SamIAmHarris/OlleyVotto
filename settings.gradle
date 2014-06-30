@@ -1,0 +1,2 @@
+include ':app', ':events'
+include ':app:libraries:volley'

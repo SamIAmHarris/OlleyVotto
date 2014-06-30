@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OlleyVotto</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_example">The Dark Knight</string>
+    <string name="cast_example">Christian Bale, Joseph-Gordon Levitt</string>
+    <string name="critics_score_example">93%</string>
+
+</resources>
