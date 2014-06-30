@@ -7,18 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.squareup.otto.Subscribe;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 
 /**
- * Created by SamMyxer on 6/29/14.
+ * Created by SamMyxer on 6/30/14.
  */
-public class BoxOfficeFragment extends Fragment {
+public class UpcomingMovieFragment extends Fragment {
 
 
     private ListView lvMovies;
@@ -47,18 +44,17 @@ public class BoxOfficeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ApiController.getInstance().fetchBoxOfficeMoves();
-
+        ApiController.getInstance().fetchUpcomingMoves();
     }
 
     @Subscribe
-    public void onBoxOfficesReceived(BoxOfficesReceivedEvent event) {
-        //Toast.makeText(getActivity(), "Box Office: Received Otto event", Toast.LENGTH_LONG).show();
+    public void onUpcomingMovieReceived(UpcomingMovieReceivedEvent event) {
+        //Toast.makeText(getActivity(), "Upcoming: Received Otto event", Toast.LENGTH_LONG).show();
 
         JSONArray items = null;
         try{
             //get the movies json array
-            items = event.boxOffices.getJSONArray("movies");
+            items = event.upcoming.getJSONArray("movies");
             //Parse json array into array of model objects
             ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
             //Load model objects into the adapter
@@ -76,3 +72,5 @@ public class BoxOfficeFragment extends Fragment {
         BusProvider.getInstance().unregister(this);
     }
 }
+
+

@@ -3,12 +3,8 @@ package com.samiamharris.olleyvotto;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 
 /**
@@ -48,21 +44,49 @@ public class ApiController {
         JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
                 BusProvider.getInstance().post(new BoxOfficesReceivedEvent(response));
-//                JSONArray items = null;
-//                try{
-//                    //get the movies json array
-//                    items = response.getJSONArray("movies");
-//                    //Parse json array into array of model objects
-//                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
-//                    //Load model objects into the adapter
-//                    for(BoxOfficeMovie movie : movies) {
-//                        boxOfficeFragment.getAdapterMovies().add(movie);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        BoxOfficeApplication.getInstance().addToRequestQueue(request);
+    }
+
+
+    public void fetchOpeningMoves() {
+
+        // http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=<key>
+        String url = getApiUrl("lists/movies/opening.json?apikey=" + API_KEY);
+
+        JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                BusProvider.getInstance().post(new OpeningMovieReceivedEvent(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        BoxOfficeApplication.getInstance().addToRequestQueue(request);
+    }
+
+
+    public void fetchUpcomingMoves() {
+
+        // http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=<key>
+        String url = getApiUrl("lists/movies/upcoming.json?apikey=" + API_KEY);
+
+        JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                BusProvider.getInstance().post(new UpcomingMovieReceivedEvent(response));
             }
         }, new Response.ErrorListener() {
             @Override

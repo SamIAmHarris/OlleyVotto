@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 /**
@@ -26,6 +24,7 @@ public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         //TODO: complete the definition of the view for each movie
 
+        String NA = "N/A";
         //get the data item for this position
         BoxOfficeMovie movie = getItem(position);
         //Check if an existing view is being reused, otherwise inflate the view
@@ -41,12 +40,14 @@ public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
         //populate the data into the template view using the data object
         tvTitle.setText(movie.getTitle());
-        tvCriticsScore.setText(movie.getCriticsScore() + "%");
+        if (movie.getCriticsScore() == -1) {
+            tvCriticsScore.setText(NA);
+        } else {
+            tvCriticsScore.setText(movie.getCriticsScore() + "%");
+
+        }
         tvCast.setText(movie.getCastList());
-        Picasso.with(getContext())
-                .load(movie.getPosterUrl())
-                .resize(135, 200)
-                .into(ivPosterImage);
+        Picasso.with(getContext()).load(movie.getPosterUrl()).resize(135, 200).into(ivPosterImage);
         //Return the completed view to render on screen
 
         return convertView;

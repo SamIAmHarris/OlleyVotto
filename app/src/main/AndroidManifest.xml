@@ -10,9 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name=".BoxOfficeApplication">
-        <activity
-            android:name=".BoxOfficeActivity"
-            android:label="@string/app_name" >
+        <activity android:name=".TabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
